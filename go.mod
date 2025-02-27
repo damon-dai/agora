@@ -1,4 +1,4 @@
-module gitlab.najieguo.com/xingdong/common/agora
+module github.com/damon-dai/agora
 
 go 1.23.1
 
