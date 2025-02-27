@@ -16,7 +16,7 @@ import (
 	"time"
 )
 
-type agoraOptions struct {
+type AgoraOptions struct {
 	appId                    string // 项目appid
 	appCertificate           string // 项目app证书
 	appKey                   string // 客户key
@@ -30,16 +30,16 @@ const (
 	KICKING_RULE_URL      = "https://api.sd-rtn.com/dev/v1/kicking-rule"       // 规则管理
 )
 
-type Option func(option *agoraOptions)
+type Option func(option *AgoraOptions)
 
-func NewAgoraClient(opts ...Option) *agoraOptions {
+func NewAgoraClient(opts ...Option) *AgoraOptions {
 	options := defaultRequestOptions() // 默认的请求选项
 
 	for _, optFunc := range opts {
 		optFunc(options)
 	}
 
-	return &agoraOptions{
+	return &AgoraOptions{
 		appId:                    options.appId,
 		appCertificate:           options.appCertificate,
 		appKey:                   options.appKey,
@@ -49,7 +49,7 @@ func NewAgoraClient(opts ...Option) *agoraOptions {
 }
 
 // GenerateRtcToken 生成声网RTC Token
-func (a *agoraOptions) GenerateRtcToken(channelName string, uid uint32) (string, error) {
+func (a *AgoraOptions) GenerateRtcToken(channelName string, uid uint32) (string, error) {
 	if len(a.appId) == 0 || len(a.appCertificate) == 0 || len(a.appKey) == 0 || len(a.appSecret) == 0 {
 		return "", errors.New("初始化配置失败")
 	}
@@ -69,7 +69,7 @@ func (a *agoraOptions) GenerateRtcToken(channelName string, uid uint32) (string,
 }
 
 // GetChannelList 获取项目的频道列表
-func (a *agoraOptions) GetChannelList() (string, error) {
+func (a *AgoraOptions) GetChannelList() (string, error) {
 	if len(a.appId) == 0 || len(a.appCertificate) == 0 || len(a.appKey) == 0 || len(a.appSecret) == 0 {
 		return "", errors.New("初始化配置失败")
 	}
@@ -81,7 +81,7 @@ func (a *agoraOptions) GetChannelList() (string, error) {
 }
 
 // GetChannelUsers 获取频道中的用户列表
-func (a *agoraOptions) GetChannelUsers(channelName string) ([]int, error) {
+func (a *AgoraOptions) GetChannelUsers(channelName string) ([]int, error) {
 	if len(a.appId) == 0 || len(a.appCertificate) == 0 || len(a.appKey) == 0 || len(a.appSecret) == 0 {
 		return []int{}, errors.New("初始化配置失败")
 	}
@@ -123,7 +123,7 @@ type KickingRuleRequest struct {
 }
 
 // CreateKickingRule 创建禁用踢人规则
-func (a *agoraOptions) CreateKickingRule(channelName string, uid int) (int64, error) {
+func (a *AgoraOptions) CreateKickingRule(channelName string, uid int) (int64, error) {
 	if len(a.appId) == 0 || len(a.appCertificate) == 0 || len(a.appKey) == 0 || len(a.appSecret) == 0 {
 		return 0, errors.New("初始化配置失败")
 	}
@@ -155,7 +155,7 @@ func (a *agoraOptions) CreateKickingRule(channelName string, uid int) (int64, er
 }
 
 // DeleteKickingRule 删除规则
-func (a *agoraOptions) DeleteKickingRule(ruleId int64) (string, error) {
+func (a *AgoraOptions) DeleteKickingRule(ruleId int64) (string, error) {
 	if len(a.appId) == 0 || len(a.appCertificate) == 0 || len(a.appKey) == 0 || len(a.appSecret) == 0 {
 		return "", errors.New("初始化配置失败")
 	}
@@ -175,7 +175,7 @@ func (a *agoraOptions) DeleteKickingRule(ruleId int64) (string, error) {
 }
 
 // GetKickingRule 获取规则列表
-func (a *agoraOptions) GetKickingRule() (string, error) {
+func (a *AgoraOptions) GetKickingRule() (string, error) {
 	if len(a.appId) == 0 || len(a.appCertificate) == 0 || len(a.appKey) == 0 || len(a.appSecret) == 0 {
 		return "", errors.New("初始化配置失败")
 	}
@@ -195,38 +195,38 @@ func base64Encode(s string) string {
 	return base64.StdEncoding.EncodeToString([]byte(s))
 }
 
-func (a *agoraOptions) WithAppId(appId string) Option {
-	return func(option *agoraOptions) {
+func (a *AgoraOptions) WithAppId(appId string) Option {
+	return func(option *AgoraOptions) {
 		option.appId = appId
 	}
 }
 
-func (a *agoraOptions) WithAppCertificate(appCertificate string) Option {
-	return func(option *agoraOptions) {
+func (a *AgoraOptions) WithAppCertificate(appCertificate string) Option {
+	return func(option *AgoraOptions) {
 		option.appCertificate = appCertificate
 	}
 }
 
-func (a *agoraOptions) WithAppKey(appKey string) Option {
-	return func(option *agoraOptions) {
+func (a *AgoraOptions) WithAppKey(appKey string) Option {
+	return func(option *AgoraOptions) {
 		option.appKey = appKey
 	}
 }
 
-func (a *agoraOptions) WithAppSecret(appSecret string) Option {
-	return func(option *agoraOptions) {
+func (a *AgoraOptions) WithAppSecret(appSecret string) Option {
+	return func(option *AgoraOptions) {
 		option.appSecret = appSecret
 	}
 }
 
-func (a *agoraOptions) WithTokenExpirationInSeconds(seconds uint32) Option {
-	return func(option *agoraOptions) {
+func (a *AgoraOptions) WithTokenExpirationInSeconds(seconds uint32) Option {
+	return func(option *AgoraOptions) {
 		option.tokenExpirationInSeconds = seconds
 	}
 }
 
-func defaultRequestOptions() *agoraOptions {
-	return &agoraOptions{ // 默认请求选项
+func defaultRequestOptions() *AgoraOptions {
+	return &AgoraOptions{ // 默认请求选项
 		tokenExpirationInSeconds: 3600, // 默认1小时过期
 	}
 }
