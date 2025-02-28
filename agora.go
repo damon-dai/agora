@@ -57,7 +57,7 @@ func (a *AgoraOptions) GenerateRtcToken(channelName string, uid uint32) (string,
 	tokenExpirationInSeconds := a.tokenExpirationInSeconds
 	// 所有的权限的有效时间，单位秒，声网建议你将该参数和 Token 的有效时间设为一致
 	privilegeExpirationInSeconds := a.tokenExpirationInSeconds
-	fmt.Println("time:", a.tokenExpirationInSeconds)
+	
 	// 生成 Token
 	result, err := rtctokenbuilder.BuildTokenWithUid(a.appId, a.appCertificate, channelName, uid, rtctokenbuilder.RolePublisher,
 		tokenExpirationInSeconds, privilegeExpirationInSeconds)
